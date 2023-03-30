@@ -1,13 +1,15 @@
+////////////////////IMPORTS//////////////////
 import { galleryItems } from './gallery-items.js';
 
-// console.log(galleryItems);
-// console.log(refs.galleryEl);
-// console.log(createGalleryMarkup(galleryItems));
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+////////////////////////////////////////////
+
+console.log(galleryItems);
 
 const refs = {
   galleryEl: document.querySelector('.gallery'),
 };
-
 ////////////////////markup///////////////////
 function createGalleryMarkup(galleryItems) {
   return galleryItems
@@ -15,21 +17,14 @@ function createGalleryMarkup(galleryItems) {
       galleryItem =>
         `
     <li class="gallery__item">
-  <a class="gallery__link" href="${galleryItem.original}"
-      alt="${galleryItem.description}"">
-    <img
-      class="gallery__image"
-      src="${galleryItem.preview}"
-      data-source="${galleryItem.original}"
-      alt="${galleryItem.description}"
-    />
-  </a>
+   <a class="gallery__link" href="${galleryItem.original}">
+      <img class="gallery__image" src="${galleryItem.preview}" alt="${galleryItem.description}" />
+   </a>
 </li>
 `
     )
     .join('');
 }
-
 ////////////////////////////////////////////
 
 ////////////////////RENDERING//////////////
@@ -37,26 +32,9 @@ refs.galleryEl.insertAdjacentHTML(
   'afterbegin',
   createGalleryMarkup(galleryItems)
 );
-/////////////////////LISTENING/////////////
-refs.galleryEl.addEventListener('click', onUserClick);
 
-///////////////MODAL OPEN//////////////////
-function onUserClick(evt) {
-  evt.preventDefault();
-  //   console.log(evt.target.dataset.source);
-  // console.log(evt.currentTarget);
-  // console.dir(evt.target);
-
-  if (evt.target.nodeName !== 'IMG') {
-    return;
-  }
-
-  return basicLightbox
-    .create(
-      `
-  		<img width="1400" height="900" src="${evt.target.dataset.source}">
-  	`
-    )
-    .show();
-}
-//////////////////////////////////////////
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  overlayOpacity: 0.7,
+});
