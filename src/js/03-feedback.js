@@ -36,7 +36,7 @@ const onFormSubmit = event => {
   localStorage.removeItem('feedback-form-state');
 };
 
-formEl.addEventListener('input', throttle(onFormInput, 2000));
+formEl.addEventListener('input', throttle(onFormInput, 500));
 formEl.addEventListener('submit', onFormSubmit);
 
 // HTML містить розмітку форми.Напиши скрипт, який буде зберігати
